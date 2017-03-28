@@ -86,18 +86,21 @@ def izloci_podatke_vin(imenik):
     vina = []
     i = 1
     for html_datoteka in mytools.files(imenik):
+        print('Parsing file {}'.format(html_datoteka))
         for vino in re.finditer(regex_wine, mytools.file_contents(html_datoteka)):
             print('Parsing wine nr {}'.format(i))
             vina.append(clean_wine(vino))
             i += 1
-        if i == 3:
+        if i == 30:
             return vina
+    return vina
+
 
 
 # capture(search_results_dir)
 # capture_urls(search_results_dir)
 # capture_wines(wine_data_dir)
 
-# vina = izloci_podatke_vin(wine_data_dir)
+vina = izloci_podatke_vin(wine_data_dir)
 
 mytools.write_table(vina, ['title', 'points', 'price', 'variety', 'country', 'alcohol', 'sommelier'], wines_csv)
